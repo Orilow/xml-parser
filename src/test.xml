@@ -1,0 +1,19 @@
+<document>
+    <EsadOutCu>
+        <node1>kjahfad</node1>
+        <documentId>fhsgdfgsdgfsd</documentId>
+        <document>
+            <path>
+                <name>name1</name>
+            </path>
+        </document>
+    </EsadOutCu>
+    <Inventory>
+        <x>
+            <path>path1</path>
+            <y>
+                <path>path2</path>
+            </y>
+        </x>
+    </Inventory>
+</document>
