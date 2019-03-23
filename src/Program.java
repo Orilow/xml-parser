@@ -16,7 +16,6 @@ public class Program {
         else {
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             Map<String, String> params = (new YMLReader()).read("src/parametrs.yml");
-
             SAXHandler handler = new SAXHandler(params);
             try {
                 parser.parse(args[0], handler);

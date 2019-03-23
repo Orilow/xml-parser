@@ -12,7 +12,7 @@ public class YMLReader {
         InputStream in = Files.newInputStream(Paths.get(path));
         Yaml yaml = new Yaml();
         Map<String, String> map = yaml.load(in);
-        Map<String, String> reversedMap = new HashMap<String, String>();
+        Map<String, String> reversedMap = new HashMap<>();
         map.forEach((key, value) -> reversedMap.put(value, key));
         return reversedMap;
     }

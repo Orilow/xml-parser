@@ -3,9 +3,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.reverse;
 
 public class SAXHandler extends DefaultHandler {
     private Stack<String> nodes = new Stack<String>();
@@ -25,10 +28,24 @@ public class SAXHandler extends DefaultHandler {
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
         nodes.push(qName);
         currentElement = qName;
-        params.forEach((key, value) -> {
+        params.forEach((String key, String value) -> {
             if (key.endsWith(qName)) {
-                if (getCurrentPath(qName).endsWith(key))
-                    currentPath = key;
+                if (!key.contains("**")) {
+                    if (getCurrentPath(qName).endsWith(key))
+                        currentPath = key;
+                }
+                else {
+                    List<String> splittedPath = Arrays.asList(key.split("/\\*\\*/|\\/"));
+                    Stack<String> splittedPathStack = new Stack<>();
+                    splittedPathStack.addAll(splittedPath);
+                    reverse(splittedPathStack);
+                    for (String node : nodes) {
+                        if (splittedPathStack.peek().equals(node))
+                            splittedPathStack.pop();
+                    }
+                    if (splittedPathStack.isEmpty())
+                        currentPath = key;
+                }
             }
         });
     }
