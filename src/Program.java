@@ -1,10 +1,10 @@
-import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.FileNotFoundException;
+import javax.xml.parsers.SAXParser;
+import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.util.Map;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 
 public class Program {
@@ -17,6 +17,7 @@ public class Program {
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             Map<String, String> params = (new YMLReader()).read("src/parametrs.yml");
             SAXHandler handler = new SAXHandler(params);
+
             try {
                 parser.parse(args[0], handler);
             }
