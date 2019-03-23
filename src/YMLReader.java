@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 public class YMLReader {
@@ -11,7 +12,7 @@ public class YMLReader {
         InputStream in = Files.newInputStream(Paths.get(path));
         Yaml yaml = new Yaml();
         Map<String, String> map = yaml.load(in);
-        Map<String, String> reversedMap = new Map<String, String>;
+        Map<String, String> reversedMap = new HashMap<String, String>();
         map.forEach((key, value) -> reversedMap.put(value, key));
         return reversedMap;
     }
