@@ -18,7 +18,10 @@ public class SAXHandler extends DefaultHandler {
     private String getCurrentPath() { return nodes.stream().collect(Collectors.joining("/")); }
 
     @Override
-    public void startElement(String namespaceURI, String localName, String qName, Attributes atts) {
+    public void startElement(String namespaceURI,
+                             String localName,
+                             String qName,
+                             Attributes atts) {
         nodes.push(qName);
         params.forEach((String patternPath, String varName) -> {
             if (patternPath.endsWith(qName))

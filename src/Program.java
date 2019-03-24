@@ -14,8 +14,9 @@ public class Program {
             System.exit(0);
         }
         else {
+            Map<String, String> params = readParams("src/parametrs.xml");
+
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-            Map<String, String> params = (new YMLReader()).read("src/parametrs.yml");
             SAXHandler handler = new SAXHandler(params);
 
             try {
@@ -27,6 +28,18 @@ public class Program {
             catch (Exception exception) {
                 System.err.println(exception);
             }
+        }
+    }
+
+    private static Map<String, String> readParams(String paramsPath) throws IOException, ParserConfigurationException, SAXException {
+        if (paramsPath.endsWith(".yml"))
+            return (new YMLParametersReader()).read(paramsPath);
+        else if (paramsPath.endsWith(".xml"))
+            return (new XMLParametersReader()).read(paramsPath);
+        else {
+            System.err.println("Wrong parameters format");
+            System.exit(0);
+            return null;
         }
     }
 }

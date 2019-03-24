@@ -1,0 +1,6 @@
+<document>
+    <esadId>EsadOutCu/documentId</esadId>
+    <esadname>EsadOutCu/document/path/name</esadname>
+    <invId>Inventory/id</invId>
+    <invName>Inventory/**/path</invName>
+</document>
