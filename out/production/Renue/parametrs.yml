@@ -2,3 +2,6 @@ esadId: EsadOutCu/documentId
 esadname: EsadOutCu/document/path/name
 invId: Inventory/id
 invName: Inventory/**/path
+test: path
+test2: document/**/Inventory/**/path
+test3: EsadOutCu/**

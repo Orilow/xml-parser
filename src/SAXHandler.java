@@ -1,19 +1,19 @@
 import static java.util.Collections.reverse;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import org.xml.sax.Attributes;
-import java.util.Arrays;
-import java.util.Stack;
-import java.util.List;
-import java.util.Map;
 
 
 public class SAXHandler extends DefaultHandler {
     private Stack<String> nodes = new Stack<>();
-    private String matchedPath = null;
+    private LinkedList<String> matchedPaths = new LinkedList<>();
     private Map<String, String> params;
 
-    SAXHandler(Map<String, String> params) { this.params = params; }
+    SAXHandler(Map<String, String> params) {
+        this.params = params;
+    }
 
     private String getCurrentPath() { return nodes.stream().collect(Collectors.joining("/")); }
 
@@ -32,7 +32,7 @@ public class SAXHandler extends DefaultHandler {
     private void TryToMatchPattern(String patternPath) {
         if (!patternPath.contains("**")) {
             if (getCurrentPath().endsWith(patternPath))
-                matchedPath = patternPath;
+                matchedPaths.add(patternPath);
         }
         else {
             List<String> splittedPatternPath = Arrays.asList(patternPath.split("/\\*\\*/|\\/"));
@@ -44,7 +44,7 @@ public class SAXHandler extends DefaultHandler {
                     splittedPatternPathStack.pop();
             }
             if (splittedPatternPathStack.isEmpty())
-                matchedPath = patternPath;
+                matchedPaths.add(patternPath);
         }
     }
 
@@ -53,10 +53,14 @@ public class SAXHandler extends DefaultHandler {
 
     @Override
     public void characters(char[] ch, int start, int length) {
-        if (matchedPath != null) {
+        if (matchedPaths.size() != 0) {
             String text = new String(Arrays.copyOfRange(ch, start, start + length));
-            System.out.println(String.format("%s = %s", params.get(matchedPath), text));
-            matchedPath = null;
+            if (text.trim().length() > 0) {
+                matchedPaths.forEach(path -> {
+                    System.out.println(String.format("%s = %s", params.get(path), text));
+                });
+                matchedPaths.clear();
+            }
         }
     }
 }

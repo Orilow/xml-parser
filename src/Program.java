@@ -14,7 +14,7 @@ public class Program {
             System.exit(0);
         }
         else {
-            Map<String, String> params = readParams("src/parametrs.xml");
+            Map<String, String> params = readParams("src/parametrs.yml");
 
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
             SAXHandler handler = new SAXHandler(params);
